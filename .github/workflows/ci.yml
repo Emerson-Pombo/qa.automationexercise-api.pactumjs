@@ -25,6 +25,7 @@ jobs:
           echo "BASE_URL=${{ secrets.BASE_URL }}" >> .env
           echo "LOGIN_EMAIL=${{ secrets.LOGIN_EMAIL }}" >> .env
           echo "LOGIN_PASSWORD=${{ secrets.LOGIN_PASSWORD }}" >> .env
+          cat .env  # opcional, só pra debug (remover depois)
 
       - name: Run tests
         run: npm run test:ci
