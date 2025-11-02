@@ -15,7 +15,8 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "test": "cross-env mocha src/specs/**/*.spec.js --file ./src/setup/test.setup.js --reporter mochawesome",    "test:ci": "nyc --reporter=text --reporter=lcov npm test",
+    "test": "cross-env mocha src/specs/**/*.spec.js --file ./src/setup/test.setup.js --reporter mochawesome",
+    "test:ci": "nyc --reporter=text --reporter=lcov npm test",
     "lint": "eslint src --ext .js",
     "report:open": "npx mochawesome-merge ./reports/*.json | npx mochawesome-report-generator -o ./reports/html --inline true"
   },
@@ -24,7 +25,8 @@
     "eslint": "^9.0.0",
     "mocha": "^10.0.0",
     "mocha-multi-reporters": "^1.5.1",
-    "nyc": "^15.1.0"
+    "nyc": "^15.1.0",
+    "which": "^5.0.0"
   },
   "dependencies": {
     "@faker-js/faker": "^10.1.0",
