@@ -12,27 +12,27 @@ import Joi from 'joi';
 let userId;
 
 describe('Usuários CRUD', () => {
-    // 🧩 Arrange — nenhuma preparação necessária para listagem de usuários
+    // Arrange — nenhuma preparação necessária para listagem de usuários
 
-    // ⚙️ Act
+    // Act
     it('GET /usuarios - lista + contrato', async () => {
         const res = await spec().get('/usuarios').expectStatus(200).returns('res.body');
         const { error } = usuariosListSchema.validate(res);
 
-        // ✅ Assert
+        // Assert
         expect(error, String(error)).to.be.undefined;
         expect(res.quantidade).to.be.a('number');
     });
 
 
     it('POST /usuarios - criação + contrato', async () => {
-        // 🧩 Arrange
+        // Arrange
         const payload = fakeUser();
 
-        // ⚙️ Act
+        //  Act
         const res = await spec().post('/usuarios').withJson(payload).expectStatus(201).returns('res.body');
 
-        // ✅ Assert
+        // Assert
         const { error } = createUsuarioSuccessSchema.validate(res);
         expect(error, String(error)).to.be.undefined;
         userId = res._id;
@@ -40,9 +40,9 @@ describe('Usuários CRUD', () => {
 
 
     it('GET /usuarios/{id} - busca + contrato item', async () => {
-        // 🧩 Arrange
+        // Arrange
 
-        // ⚙️ Act
+        // Act
         const payload = {
             nome: 'Usuário Atualizado QA',
             email: `${Date.now()}@testeqa.com`, // email único
@@ -56,7 +56,7 @@ describe('Usuários CRUD', () => {
             .expectStatus(200)
             .returns('res.body');
 
-        // ✅ Assert
+        // Assert
 
         const messageSchema = Joi.object({
             message: Joi.string().required()
@@ -67,7 +67,7 @@ describe('Usuários CRUD', () => {
     });
 
     it('PUT /usuarios/{id} - alteração', async () => {
-        // 🧩 Arrange
+        // Arrange
         const payload = {
             nome: 'Usuário Atualizado QA',
             email: `${Date.now()}@testeqa.com`, // email único
@@ -75,14 +75,14 @@ describe('Usuários CRUD', () => {
             administrador: 'false'
         };
 
-        // ⚙️ Act
+        // Act
         const res = await spec()
             .put(`/usuarios/${userId}`)
             .withJson(payload)
             .expectStatus(200)
             .returns('res.body');
 
-        // ✅ Assert
+        //  Assert
         const messageSchema = Joi.object({
             message: Joi.string().required()
         }).required();
@@ -92,12 +92,12 @@ describe('Usuários CRUD', () => {
     });
 
     it('DELETE /usuarios/{id} - exclusão', async () => {
-        // 🧩 Arrange
+        // Arrange
 
-        // ⚙️ Act
+        //  Act
         const res = await spec().delete(`/usuarios/${userId}`).expectStatus(200).returns('res.body');
 
-        // ✅ Assert
+        // Assert
         const { error } = commonMessageSchema.validate(res);
         expect(error, String(error)).to.be.undefined;
     });

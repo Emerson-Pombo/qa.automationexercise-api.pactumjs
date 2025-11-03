@@ -15,12 +15,12 @@ let productId;
 describe('Produtos CRUD', () => {
 
     it('GET /produtos - lista + contrato', async () => {
-        // 🧩 Arrange — nenhuma preparação necessária para o GET de listagem
+        // Arrange — nenhuma preparação necessária para o GET de listagem
 
-        // ⚙️ Act
+        // Act
         const res = await spec().get('/produtos').expectStatus(200).returns('res.body');
 
-        // ✅ Assert
+        // Assert
         const { error } = produtosListSchema.validate(res);
         expect(error, String(error)).to.be.undefined;
         expect(res.quantidade).to.be.a('number');
@@ -28,13 +28,13 @@ describe('Produtos CRUD', () => {
 
 
     it('POST /produtos - criação + contrato', async () => {
-        // 🧩 Arrange
+        // Arrange
         const payload = fakeProduct();
 
-        // ⚙️ Act
+        // Act
         const res = await spec().post('/produtos').withJson(payload).expectStatus(201).returns('res.body');
 
-        // ✅ Assert
+        // Assert
         const { error } = createProdutoSuccessSchema.validate(res);
         expect(error, String(error)).to.be.undefined;
         productId = res._id;
@@ -42,20 +42,20 @@ describe('Produtos CRUD', () => {
 
 
     it('GET /produtos/{id} - item + contrato', async () => {
-        // 🧩 Arrange — utiliza o ID salvo do produto criado anteriormente
+        // Arrange — utiliza o ID salvo do produto criado anteriormente
 
-        // ⚙️ Act
+        // Act
         const res = await spec().get(`/produtos/${productId}`).expectStatus(200).returns('res.body');
         const { error } = produtoItemSchema.validate(res);
 
-        // ✅ Assert
+        // Assert
         expect(error, String(error)).to.be.undefined;
         expect(res._id).to.equal(productId);
     });
 
 
     it('PUT /produtos/{id} - edição', async () => {
-        // 🧩 Arrange
+        // Arrange
 
         const payload = {
             nome: 'Produto Atualizado',
@@ -64,7 +64,7 @@ describe('Produtos CRUD', () => {
             quantidade: 99
         };
 
-        // ⚙️ Act
+        // Act
 
         const res = await spec()
             .put(`/produtos/${productId}`)
@@ -72,7 +72,7 @@ describe('Produtos CRUD', () => {
             .expectStatus(200)
             .returns('res.body');
 
-        // ✅ Assert
+        // Assert
 
         const messageSchema = Joi.object({ message: Joi.string().required() }).required();
         const { error } = messageSchema.validate(res);
@@ -81,13 +81,13 @@ describe('Produtos CRUD', () => {
 
 
     it('DELETE /produtos/{id} - exclusão', async () => {
-        // 🧩 Arrange — utiliza o mesmo ID armazenado anteriormente
+        // Arrange — utiliza o mesmo ID armazenado anteriormente
 
-        // ⚙️ Act
+        //  Act
         const res = await spec().delete(`/produtos/${productId}`).expectStatus(200).returns('res.body');
         const messageSchema = Joi.object({ message: Joi.string().required() }).required();
 
-        // ✅ Assert
+        //  Assert
         const { error } = messageSchema.validate(res);
         expect(error, String(error)).to.be.undefined;
     });

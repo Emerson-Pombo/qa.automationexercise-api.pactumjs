@@ -5,10 +5,10 @@ import { loginSuccessSchema, loginErrorSchema } from '../../schemas/auth.schema.
 
 describe('Auth /login', () => {
     it('Login com sucesso + contrato', async () => {
-        // 🧩 Arrange
+        // Arrange
         const payload = { email: config.email, password: config.password };
 
-        // ⚙️ Act
+        // Act
         const res = await spec()
             .post('/login')
             .withJson(payload)
@@ -30,7 +30,7 @@ describe('Auth /login', () => {
             .expectStatus(401)
             .returns('res.body');
 
-        // ✅ Assert
+        // Assert
         const { error } = loginErrorSchema.validate(res);
         expect(error, String(error)).to.be.undefined;
     });
